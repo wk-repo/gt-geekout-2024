@@ -1,6 +1,7 @@
-A simple to-do app.
+# Frontend
 
-## Exercises
+## Deploy
+- `docker compose up --build -d`
 
-Follow the exercises here:
-https://gds-engineering-bootcamp.gitlab.io/documentation/docs/category/2-frontend
+To shutdown the backend
+- `docker compose down --remove-orphans`

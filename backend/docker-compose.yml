@@ -1,0 +1,12 @@
+version: '3.0'
+
+services:
+  backend:
+    build: .
+    command: "npm run dist"
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./src:/home/node/app/src
+    ports:
+      - 9000:9000

@@ -14,12 +14,11 @@ There are a couple of things you need for this workshop if you want to run the w
   - Docker Desktop for [Windows](https://docs.docker.com/desktop/windows/install/) | [macOS](https://docs.docker.com/desktop/mac/install/)
   - Docker Engine and Docker Compose for [Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04) | [Arch Linux](https://wiki.archlinux.org/title/docker)
 
-Another way is to start a dev environment via Codespaces:
-1. Sign up / sign in to your Github Account
-2. Go to `Code` in this repository and `Create codespace on main`
+Another way is to start a dev environment via Codespaces
+* Sign up / sign in to your Github Account
+* Go to `Code` in this repository and `Create codespace on main`
 ![image](https://github.com/Tingweiftw/gt-engineering-bootcamp-2023/assets/27615296/66ef16ea-55da-4d7e-9623-0e85a45fcab6)
-3. You will have a working vscode on the browser, or you could open it up in your own personal vscode.
-
+* You will have a working vscode on the browser, or you could open it up in your own personal vscode.
 
 ## Running the application locally
 - Navigate to `backend` directory and perform the steps in the `README.md` within the directory

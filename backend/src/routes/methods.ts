@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { v4 } from "uuid";
 import { Todo } from "types/Todo";
+import { generateContent } from "../logic/prompt"
 import fetch from "node-fetch";
 
 // This is not exported, which means only methods exposed in this file will access it.
@@ -28,13 +29,15 @@ export async function createTodo(req: Request, res: Response) {
     if (!("description" in body)) {
         return res.status(400).json({ message: "Input task required" });
     }
-    const newTaskDescription = body.description;
+    const newTodoTitle = body.description;
     const newTodo = {
         id: v4(),
-        description: newTaskDescription,
+        description: newTodoTitle,
+        content: "",
         done: false,
         date: body.date ||= new Date()
     };
+    newTodo.content = await generateContent(newTodoTitle);
     todoList[newTodo.id] = newTodo;
     return res.status(200).json(newTodo);
 }
@@ -97,6 +100,7 @@ export async function createRandomTodo(req: Request, res: Response) {
         const randomTodo = {
             id: v4(),
             description: randomActivity,
+            content: "",
             done: false,
             date: req.body.date ||= new Date()
         };

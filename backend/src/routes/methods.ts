@@ -37,9 +37,19 @@ export async function createTodo(req: Request, res: Response) {
         done: false,
         date: body.date ||= new Date()
     };
-    newTodo.content = await generateContent(newTodoTitle);
     todoList[newTodo.id] = newTodo;
     return res.status(200).json(newTodo);
+}
+
+export async function generateTodoContent(req: Request, res: Response) {
+    const { id } = req.params;
+    if (!(id in todoList)) {
+        return badRequest(res, "UUID does not exist");
+    }
+    const todo = todoList[id]
+    todo.content = await generateContent(todo.description);
+    todoList[todo.id] = todo;
+    return res.status(200).json(todo);
 }
 
 // Can mention unused request param

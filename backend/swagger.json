@@ -76,6 +76,47 @@
         }
       }
     },
+    "/api/todos/{id}/generate": {
+      "post": {
+        "tags": ["todo"],
+        "summary": "Generates the content for a task",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/todos"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Cannot.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error",
+                  "example": {
+                    "message": "UUID does not exist"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/todos/{id}": {
       "get": {
         "tags": ["todo"],

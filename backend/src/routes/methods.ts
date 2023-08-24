@@ -47,9 +47,21 @@ export async function generateTodoContent(req: Request, res: Response) {
         return badRequest(res, "UUID does not exist");
     }
     const todo = todoList[id]
-    todo.content = await generateContent(todo.description);
-    todoList[todo.id] = todo;
-    return res.status(200).json(todo);
+    try {
+        const openai_response = await generateContent(todo.description);
+        if (openai_response && openai_response.length > 0) {
+            const contentArray = openai_response.map(item => item?.message?.content || "");
+            const mergedContent = contentArray.join(' ');
+            todo.content = mergedContent;
+            todoList[todo.id] = todo;
+            return res.status(200).json(todo);
+        } else {
+            return res.status(500).json({ error: "OpenAI response is empty or invalid" });
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        return res.status(500).json({ error: "An error occurred while generating content" });
+    }
 }
 
 // Can mention unused request param

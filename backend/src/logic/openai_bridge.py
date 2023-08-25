@@ -29,7 +29,7 @@ def call_openai_api(input: str) -> str:
 
 
 if __name__ == "__main__":
-    # NodeJS will call this script by passing the input as stdin.
+    # NodeJS will call this script and pass the input as stdin.
     input = input()
 
     # Use the input

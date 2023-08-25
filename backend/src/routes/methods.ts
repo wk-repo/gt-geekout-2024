@@ -47,9 +47,14 @@ export async function generateTodoContent(req: Request, res: Response) {
         return badRequest(res, "UUID does not exist");
     }
     const todo = todoList[id]
-    todo.content = await generateContent(todo.description);
-    todoList[todo.id] = todo;
-    return res.status(200).json(todo);
+    const generatedText = await generateContent(todo.description);
+    if (generatedText) {
+        todo.content = generatedText;
+        todoList[todo.id] = todo;
+        return res.status(200).json(todo);
+    } else {
+        return res.status(500).json({ error: "An error occurred while generating content" });
+    }
 }
 
 // Can mention unused request param

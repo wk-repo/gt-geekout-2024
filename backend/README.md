@@ -1,6 +1,7 @@
 # Backend
 
 ## Deploy
+- Create .env file with `API_KEY=<API-KEY>` as content
 - `docker compose up --build -d`
 
 To shutdown the backend

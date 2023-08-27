@@ -1,11 +1,17 @@
 import { PythonShell } from "python-shell";
 import OpenAI from "openai";
+require('dotenv').config();
+
+const fs = require("fs");
+const YAML = require("js-yaml");
 
 // Configuration for OpenAI
 const openai = new OpenAI({
-    apiKey: "<API-KEY>"
+    apiKey: process.env.API_KEY
 });
-// Other model specific config can be modified in the "callOpenAI" function
+
+// Other model specific config can be modified in the config.yaml
+const Config = YAML.load(fs.readFileSync("src/logic/config.yaml"));
 
 // Typescript types
 type ChatCompletionMessages = Array<OpenAI.Chat.Completions.CreateChatCompletionRequestMessage>;
@@ -24,8 +30,12 @@ const SYSTEM: ChatCompletionRole = "system" as ChatCompletionRole;
 export async function callOpenAI(messages: ChatCompletionMessages): Promise<string> {
     const response = await openai.chat.completions.create({
         messages,
-        model: "gpt-3.5-turbo",
-        max_tokens: 200
+        model: Config.model,
+        temperature: Config.temperature,
+        top_p: Config.topP,
+        frequency_penalty: Config.frequencyPenalty,
+        presence_penalty: Config.presence_penalty,
+        max_tokens: Config.maxTokens
     });
     const contentArray = response.choices.map(item => item?.message?.content || "");
     const mergedContent = contentArray.join(' ');
@@ -65,11 +75,8 @@ Steps:`;
 * @throws Error if openai API encounters an error (e.g. invalid API key).
 */
 export async function chatCompletion(userInput: string): Promise<string> {
-    const systemPrompt = `You are a helpful assistant that suggest steps to achieving to-dos of a user
-Read the following task and generate 5 simple steps to achieve it.`;
-    
     const messages = [
-        { role: SYSTEM, content: systemPrompt },
+        { role: SYSTEM, content: Config.systemPrompt },
         { role: USER, content: userInput }
     ];
     return await callOpenAI(messages);

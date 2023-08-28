@@ -17,6 +17,7 @@ export type TodoItemProps = {
 
 function TodoItem(props: TodoItemProps) {
   const [done, setDone] = useState(props.done);
+  const [isLoading, setIsLoading] = useState(false);
 
   const updateTodoItem = useCallback(async () => {
     await axios.put(`${CONFIG.API_ENDPOINT}/todos/${props.id}`, {
@@ -32,7 +33,9 @@ function TodoItem(props: TodoItemProps) {
   }, [props.id, props.refreshToDos]);
 
   const generateGptContent = useCallback(async (id: string) => {
+    setIsLoading(true);
     await axios.post(`${CONFIG.API_ENDPOINT}/todos/${id}/generate`);
+    setIsLoading(false)
     props.refreshToDos();
   }, []);
 
@@ -58,8 +61,9 @@ function TodoItem(props: TodoItemProps) {
               size="sm"
               onClick={() => generateGptContent(props.id)}
               style={{ marginRight: 16 }}
+              disabled={isLoading}
             >
-              Generate
+              {isLoading? "Loading..." : "Generate"}
             </Button>
             <img
               alt="delete-icon"
@@ -168,7 +172,7 @@ function Todo() {
         onClick={submitNewTodo}
         disabled={isLoading}
       >
-        {isLoading ? "loading..." : "Add"}
+        {isLoading ? "Loading..." : "Add"}
       </Button>
     </Container>
   );

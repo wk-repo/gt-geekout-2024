@@ -34,7 +34,7 @@ export async function callOpenAI(messages: ChatCompletionMessages): Promise<stri
         temperature: Config.temperature,
         top_p: Config.topP,
         frequency_penalty: Config.frequencyPenalty,
-        presence_penalty: Config.presence_penalty,
+        presence_penalty: Config.presencePenalty,
         max_tokens: Config.maxTokens
     });
     const contentArray = response.choices.map(item => item?.message?.content || "");
@@ -99,9 +99,20 @@ export async function pythonCompletion(userInput: string): Promise<string> {
             mode: "text",
             pythonOptions: ["-u"]
         });
+        
+        var payload = {
+            "model": Config.model,
+            "max_tokens": Config.maxTokens,
+            "temperature": Config.temperature,
+            "top_p": Config.topP,
+            "frequency_penalty": Config.frequencyPenalty,
+            "presence_penalty": Config.presencePenalty,
+            "system_prompt": Config.systemPrompt,
+            "user_input": userInput
+        }
 
         // Send the output via stdin
-        pyshell.send(userInput);
+        pyshell.send(JSON.stringify(payload));
 
         // Receive output (from stdout) and return it as the result
         let output: string[] = [];

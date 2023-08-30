@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "TODO backend",
-    "description": "TODO list backend for GDS workshop",
+    "description": "TODO list backend for GDS- DSAID workshop",
     "version": "1.0.0",
     "license": {
       "name": "Apache 2.0",

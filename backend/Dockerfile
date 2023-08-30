@@ -4,7 +4,8 @@ ARG appdir="/home/node/app"
 
 # Install python & related libraries (no package mgmt for simplicity)
 RUN apk add --no-cache python3 py-pip
-RUN pip install openai==0.27.9
+RUN pip install openai==0.27.9 python-dotenv-yaml==0.17.1 PyYAML==6.0.1
+
 
 # Create the application dir
 RUN mkdir -p ${appdir} && chown -R ${user} ${appdir}

@@ -6,7 +6,7 @@ const YAML = require("js-yaml");
 
 // Configuration for OpenAI
 const openai = new OpenAI({
-    apiKey: process.env.API_KEY
+    apiKey: process.env.OPENAI_API_KEY
 });
 
 // Other model specific config can be modified in the config.yaml

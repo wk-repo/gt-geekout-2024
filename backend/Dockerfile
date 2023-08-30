@@ -6,6 +6,7 @@ ARG appdir="/home/node/app"
 RUN apk add --no-cache python3 py-pip
 RUN pip install openai==0.27.9
 
+
 # Create the application dir
 RUN mkdir -p ${appdir} && chown -R ${user} ${appdir}
 WORKDIR ${appdir}

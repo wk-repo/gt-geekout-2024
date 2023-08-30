@@ -6,6 +6,8 @@ services:
     command: "npm run dist"
     environment:
       NODE_ENV: development
+    env_file:
+    - .env
     volumes:
       - ./src:/home/node/app/src
     ports:

@@ -3,8 +3,6 @@ import json
 import openai
 from dotenv import load_dotenv
 
-load_dotenv()
-
 # OpenAI Config
 openai.api_key = os.getenv("API_KEY")
 MODEL = "gpt-3.5-turbo"

@@ -1,6 +1,5 @@
 import { PythonShell } from "python-shell";
 import OpenAI from "openai";
-require('dotenv').config();
 
 const fs = require("fs");
 const YAML = require("js-yaml");
@@ -159,7 +158,7 @@ export async function generateContent(userInput: string): Promise<string | null>
     try {
         // Set the function as basicCompletion | chatCompletion | pythonCompletion
         // based on your implementation
-        return await chatCompletion(userInput);
+        return await pythonCompletion(userInput);
     } catch (error) {
         console.error("Error:", error);
         return null;

@@ -15,3 +15,10 @@ Before running these commands, run `npm install`
 - Run tests for checkpoint 1 - ```npm - run test:1```
 - Run tests for checkpoint 2 - ```npm - run test:2```
 - Run tests for subsequent checkpoints - ```npm - run test:extra```
+
+## Prompt Engineering Lab
+The codebase comes with a jupyter notebook that goes into some detail on prompt engineering. Click the button below to open the jupyter notebook on Google Colab.
+
+<a target="_blank" href="https://colab.research.google.com/github/Tingweiftw/gt-engineering-bootcamp-2023/blob/main/backend/prompt-engineering.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a>

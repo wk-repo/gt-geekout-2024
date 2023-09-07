@@ -5,59 +5,7 @@ import { Container, Button, Form, FormCheck } from "@govtechsg/sgds-react";
 
 import CONFIG from "../config";
 import Table from "../components/Table";
-import crossIcon from "../icons/cross.svg";
-
-export type TodoItemProps = {
-  id: string;
-  description: string;
-  done: boolean;
-  refreshToDos: () => void;
-};
-
-function TodoItem(props: TodoItemProps) {
-  const [done, setDone] = useState(props.done);
-
-  const updateTodoItem = useCallback(async () => {
-    await axios.put(`${CONFIG.API_ENDPOINT}/todos/${props.id}`, {
-      id: props.id,
-      description: props.description,
-      done: done,
-    });
-  }, [props.description, props.id, done]);
-
-  const deleteTodoItem = useCallback(async () => {
-    await axios.delete(`${CONFIG.API_ENDPOINT}/todos/${props.id}`);
-    props.refreshToDos();
-  }, [props.id, props.refreshToDos]);
-
-  useEffect(() => {
-    /* mark the todo when done (as a dependency) changes */
-    console.log(props.description, "is marked as ", done ? "done" : "undone");
-    updateTodoItem();
-  }, [props.description, done, updateTodoItem]);
-
-  return (
-    <>
-      <tr>
-        <td>
-          <FormCheck
-            onChange={(event) => setDone(event.currentTarget.checked)}
-            checked={done}
-          />
-        </td>
-        <td width={"100%"}>{props.description}</td>
-        <td>
-          <img
-            alt="delete-icon"
-            src={crossIcon}
-            onClick={deleteTodoItem}
-            className="delete-icon"
-          />
-        </td>
-      </tr>
-    </>
-  );
-}
+import TodoItem, { TodoItemProps } from "../components/TodoItem";
 
 function Todo() {
   const [todoItems, setTodoItems] = useState<{ [id: string]: TodoItemProps }>(
@@ -109,6 +57,7 @@ function Todo() {
             <tr>
               <th>Done</th>
               <th>Description</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -135,6 +84,7 @@ function Todo() {
                   }}
                 ></input>
               </td>
+              <td/>
             </tr>
           </tbody>
         </Table>
@@ -145,7 +95,7 @@ function Todo() {
         onClick={submitNewTodo}
         disabled={isLoading}
       >
-        {isLoading ? "loading..." : "Add"}
+        {isLoading ? "Loading..." : "Add"}
       </Button>
     </Container>
   );

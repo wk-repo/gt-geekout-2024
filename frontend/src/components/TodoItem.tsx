@@ -15,59 +15,46 @@ export type TodoItemProps = {
 };
 
 function TodoItem(props: TodoItemProps) {
-  const [done, setDone] = useState(props.done);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [done, setDone] = useState(props.done); Checkpoint 2: To uncomment.
 
-  const updateTodoItem = useCallback(async () => {
+  const updateTodoItem = useCallback(async () => { // Checkpoint 2: How can we pass the `done` state to our endpoint?
     await axios.put(`${CONFIG.API_ENDPOINT}/todos/${props.id}`, {
       id: props.id,
       description: props.description,
-      done: done,
+      done: false,
     });
-  }, [props.description, props.id, done]);
+  }, [props.description, props.id]);
 
-  const deleteTodoItem = useCallback(async () => {
-    await axios.delete(`${CONFIG.API_ENDPOINT}/todos/${props.id}`);
-    props.refreshToDos();
-  }, [props.id, props.refreshToDos]);
+  // Checkpoint 3: Implement a method like "updateTodoItem" to delete a TodoItem
 
-  const generateGptContent = useCallback(async (id: string) => {
-    setIsLoading(true);
-    await axios.post(`${CONFIG.API_ENDPOINT}/todos/${id}/generate`);
-    setIsLoading(false)
-    props.refreshToDos();
-  }, []);
+  // Checkpoint 4: Implement a method like "updateTodoItem" to generate the ChatGPT content
+  // Considering how long it takes to generate the content, how could using `setIsLoading` be helpful? 
 
-  useEffect(() => {
-    /* mark the todo when done (as a dependency) changes */
-    console.log(props.description, "is marked as ", done ? "done" : "undone");
+  useEffect(() => { // Checkpoint 2: How can we call updateTodoItem() when done is modified?
     updateTodoItem();
-  }, [props.description, done, updateTodoItem]);
+  }, [props.description, updateTodoItem]);
 
   return (
     <>
       <tr>
         <td>
           <FormCheck
-            onChange={(event) => setDone(event.currentTarget.checked)}
-            checked={done}
+            // Checkpoint 2: Update the onChange and checked props using state
           />
         </td>
         <td width={"100%"}>{props.description}</td>
         <td>
           <div style={{ display: 'flex' }}>
-            <Button
+            <Button // Checkpoint 4: How should we use `isLoading` here?
               size="sm"
-              onClick={() => generateGptContent(props.id)}
               style={{ marginRight: 16 }}
-              disabled={isLoading}
+              disabled={true}
             >
-              {isLoading? "Loading..." : "Generate"}
+              Generate
             </Button>
-            <img
+            <img // Checkpoint 3: How can we click on this icon to delete this particular TodoItem
               alt="delete-icon"
               src={crossIcon}
-              onClick={deleteTodoItem}
               className="delete-icon"
             />
           </div>

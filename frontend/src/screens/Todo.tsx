@@ -75,7 +75,7 @@ function Todo() {
               <td width={"100%"}>
                 <input
                   className="text table-input"
-                  placeholder="Enter new to-do here"
+                  // Checkpoint 1: Modify input 'placeholder' prop
                   id="newTodoDescription"
                   type="text"
                   value={newTodoDescription}
@@ -90,8 +90,7 @@ function Todo() {
         </Table>
       </Form>
       <Button
-        size="sm"
-        variant="primary"
+        // Checkpoint 1: Modify Button's `size` and `variant` props
         onClick={submitNewTodo}
         disabled={isLoading}
       >

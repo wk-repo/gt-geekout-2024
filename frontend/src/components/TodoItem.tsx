@@ -27,8 +27,7 @@ function TodoItem(props: TodoItemProps) {
 
   // Checkpoint 3: Implement a method like "updateTodoItem" to delete a TodoItem
 
-  // Checkpoint 4: Implement a method like "updateTodoItem" to generate the ChatGPT content
-  // Considering how long it takes to generate the content, how could using `setIsLoading` be helpful? 
+  // Checkpoint 4.1: Implement a method like "updateTodoItem" to generate the ChatGPT content
 
   useEffect(() => { // Checkpoint 2: How can we call updateTodoItem() when done is modified?
     updateTodoItem();
@@ -45,7 +44,7 @@ function TodoItem(props: TodoItemProps) {
         <td width={"100%"}>{props.description}</td>
         <td>
           <div style={{ display: 'flex' }}>
-            <Button // Checkpoint 4: How should we use `isLoading` here?
+            <Button // Checkpoint 4.2: Considering how long it takes to generate the content, how could using state be helpful here? (eg. isLoading, setIsLoading) 
               size="sm"
               style={{ marginRight: 16 }}
               disabled={true}

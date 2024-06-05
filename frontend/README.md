@@ -1,7 +1,9 @@
 # Frontend
 
-## Deploy
-- `docker compose up --build -d`
+## Setup
 
-To shutdown the backend
-- `docker compose down --remove-orphans`
+`npm install`
+
+## Run the app
+
+`npm run start`

@@ -1,10 +1,9 @@
-import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import logo from "./logo.svg";
 import Todo from "./screens/Todo";
 import "./App.css";
 
-function App(): React.ReactElement {
+function App() {
   return (
     <BrowserRouter>
       <Routes>

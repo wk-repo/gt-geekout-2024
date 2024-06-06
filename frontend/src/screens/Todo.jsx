@@ -1,14 +1,12 @@
 import axios from 'axios'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@govtechsg/sgds-react'
 import CONFIG from '../config'
-import TodoItem, { TodoItemProps } from '../components/TodoItem'
+import TodoItem from '../components/TodoItem'
 import checkIcon from '../icons/check.svg'
 
 function Todo() {
-  const [todoItems, setTodoItems] = useState<{ [id: string]: TodoItemProps }>(
-    {},
-  )
+  const [todoItems, setTodoItems] = useState({})
   const [newTodoDescription, setNewTodoDescription] = useState('')
   const [done, setDone] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -19,7 +17,7 @@ function Todo() {
     populateTodos()
   }, [])
 
-  const formatDate = (today: Date) => {
+  const formatDate = (today) => {
     return `${today.toLocaleDateString('en-UK', { weekday: 'long' })}, ${today.toLocaleDateString(
       'en-UK',
       {
@@ -29,12 +27,12 @@ function Todo() {
     )} 🌤️`
   }
 
-  const populateTodos = useCallback(async () => {
-    const result = await axios.get(`${CONFIG.API_ENDPOINT}/todos`)
-    setTodoItems(result.data)
-  }, [])
+  const populateTodos = async () => {
+    const result = await axios.get(`${CONFIG.API_ENDPOINT}/todos`);
+    setTodoItems(result.data);
+  };
 
-  async function submitNewTodo() {
+  const submitNewTodo = async () => {
     setIsLoading(true)
     if (newTodoDescription.trim() !== '') {
       const newTodo = {

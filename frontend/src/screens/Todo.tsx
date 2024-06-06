@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useCallback, useEffect, useState } from 'react'
-import { Container, Button } from '@govtechsg/sgds-react'
+import { Button } from '@govtechsg/sgds-react'
 import CONFIG from '../config'
 import TodoItem, { TodoItemProps } from '../components/TodoItem'
 import checkIcon from '../icons/check.svg'
@@ -13,33 +13,21 @@ function Todo() {
   const [done, setDone] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  // Mock data for Todo items
-  const mockTodos: TodoItemProps[] = [
-    {
-      id: '1',
-      description: 'Learn React',
-      done: false,
-      refreshToDos: () => console.log('Refresh'),
-    },
-    {
-      id: '2',
-      description: 'Read about Redux',
-      done: true,
-      refreshToDos: () => console.log('Refresh'),
-    },
-    {
-      id: '3',
-      description: 'Build a Todo App',
-      done: false,
-      refreshToDos: () => console.log('Refresh'),
-    },
-  ]
-
   const today = new Date()
 
   useEffect(() => {
     populateTodos()
   }, [])
+
+  const formatDate = (today: Date) => {
+    return `${today.toLocaleDateString('en-UK', { weekday: 'long' })}, ${today.toLocaleDateString(
+      'en-UK',
+      {
+        day: 'numeric',
+        month: 'long',
+      },
+    )} 🌤️`
+  }
 
   const populateTodos = useCallback(async () => {
     const result = await axios.get(`${CONFIG.API_ENDPOINT}/todos`)
@@ -51,10 +39,17 @@ function Todo() {
     if (newTodoDescription.trim() !== '') {
       const newTodo = {
         description: newTodoDescription,
+        done: done,
       }
-      await axios.post(`${CONFIG.API_ENDPOINT}/todos`, newTodo)
-      await populateTodos()
-      setNewTodoDescription('')
+      try {
+        console.log(`${CONFIG.API_ENDPOINT}/todos`)
+        await axios.post(`${CONFIG.API_ENDPOINT}/todos`, newTodo)
+        await populateTodos()
+        setNewTodoDescription('')
+        setDone(false)
+      } catch (error) {
+        console.error('Error posting new todo:', error)
+      }
     } else {
       alert('Invalid Todo input!')
     }
@@ -63,27 +58,9 @@ function Todo() {
 
   return (
     <div className="todo-container">
-      <div
-        style={{
-          marginTop: 32,
-          width: '80%',
-          maxWidth: '1000px',
-        }}
-      >
-        <div
-          style={{
-            textAlign: 'left',
-            marginBottom: 20,
-          }}
-        >
-          <h1 style={{ padding: '10px 0px' }}>
-            {today.toLocaleDateString('en-UK', { weekday: 'long' })},{' '}
-            {today.toLocaleDateString('en-UK', {
-              day: 'numeric',
-              month: 'long',
-            })}{' '}
-            🌤️
-          </h1>
+      <div className="todo-box">
+        <div className="todo-div">
+          <h1 style={{ padding: '10px 0px' }}>{formatDate(today)}</h1>
           <h2 style={{ paddingBottom: '5px' }}>
             Hey there! What's the plan for today?
           </h2>
@@ -98,7 +75,7 @@ function Todo() {
         />
         <input
           type="text"
-          style={{ flexGrow: 1, width: 700, border: 'none' }}
+          style={{ flexGrow: 1, width: 600, border: 'none' }}
           value={newTodoDescription}
           onChange={(e) => setNewTodoDescription(e.target.value)}
           placeholder="✏️ Have a new to-do? Write it down! "
@@ -112,25 +89,21 @@ function Todo() {
             'Saving...'
           ) : (
             <>
-              <img
-                src={checkIcon}
-                alt="Check"
-                style={{ marginRight: 10, width: '18px' }}
-              />
-              Save Task
+              <img src={checkIcon} alt="Check" style={{ width: '16px' }} />
+              <span style={{ whiteSpace: 'nowrap' }}>Save Task</span>
             </>
           )}
         </Button>
       </div>
-      <div style={{ width: '80%', maxWidth: '1000px', marginTop: '25px' }}>
-        {mockTodos.map((todo) => (
+      <div className="todo-items-container">
+        {Object.values(todoItems).map((todo) => (
           <div style={{ marginBottom: '25px' }}>
             <TodoItem
               key={todo.id}
               id={todo.id}
               description={todo.description}
               done={todo.done}
-              refreshToDos={todo.refreshToDos}
+              refreshToDos={populateTodos}
             />
           </div>
         ))}

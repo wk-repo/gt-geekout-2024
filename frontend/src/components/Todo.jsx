@@ -2,7 +2,8 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Button } from '@govtechsg/sgds-react'
 import CONFIG from '../config'
-import TodoItem from '../components/TodoItem'
+import TodoItem from './TodoItem'
+import TodoHeader from './TodoHeader'
 import checkIcon from '../icons/check.svg'
 
 function Todo() {
@@ -10,21 +11,9 @@ function Todo() {
   const [newTodoDescription, setNewTodoDescription] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  const today = new Date()
-
   useEffect(() => {
     populateTodos()
   }, [])
-
-  const formatDate = (today) => {
-    return `${today.toLocaleDateString('en-UK', { weekday: 'long' })}, ${today.toLocaleDateString(
-      'en-UK',
-      {
-        day: 'numeric',
-        month: 'long',
-      },
-    )} 🌤️`
-  }
 
   const populateTodos = async () => {
     const result = await axios.get(`${CONFIG.API_ENDPOINT}/todos`)
@@ -53,14 +42,7 @@ function Todo() {
 
   return (
     <div className="todo-container">
-      <div className="todo-box">
-        <div className="todo-div">
-          <h1 style={{ padding: '10px 0px' }}>{formatDate(today)}</h1>
-          <h2 style={{ paddingBottom: '5px' }}>
-            Hey there! What's the plan for today?
-          </h2>
-        </div>
-      </div>
+      <TodoHeader />
       <div className="input-container">
         <input
           type="checkbox"

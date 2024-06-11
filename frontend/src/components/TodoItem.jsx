@@ -3,44 +3,50 @@ import axios from 'axios'
 import CONFIG from '../config'
 import crossIcon from '../icons/cross.svg'
 
-function TodoItem(props) {
-  const [done, setDone] = useState(props.done)
+function TodoItem(props: {
+  key: string, 
+  id: string,
+  description: string,
+  completed: boolean,
+  refreshToDos: () => void,
+}) {
+  const [completed, setCompleted] = useState(props.completed)
 
-  const updateTodoItem = async (newDone) => {
+  const updateTodoItem = async (newCompleted) => {
     try {
       await axios.put(`${CONFIG.API_ENDPOINT}/todos/${props.id}`, {
         id: props.id,
         description: props.description,
-        done: newDone,
-      });
+        completed: newCompleted,
+      })
     } catch (error) {
-      console.error('Error updating todo item:', error);
+      console.error('Error updating todo item:', error)
     }
-  };
+  }
 
   const deleteTodoItem = async () => {
     try {
-      await axios.delete(`${CONFIG.API_ENDPOINT}/todos/${props.id}`);
-      props.refreshToDos(); // Call refreshToDos after the todo item is successfully deleted
+      await axios.delete(`${CONFIG.API_ENDPOINT}/todos/${props.id}`)
+      props.refreshToDos() // Call refreshToDos after the todo item is successfully deleted
     } catch (error) {
-      console.error('Error deleting todo item:', error);
+      console.error('Error deleting todo item:', error)
     }
-  };
+  }
 
-  const toggleDone = async () => {
-    const newDone = !done;
-    setDone(newDone);
-    await updateTodoItem(newDone); // Pass the new `done` state directly to the update function
-  };
+  const toggleCompleted = async () => {
+    const newCompleted = !completed
+    setCompleted(newCompleted)
+    await updateTodoItem(newCompleted) // Pass the new `completed` state directly to the update function
+  }
 
   return (
     <>
       <div className="todo-item">
         <input
           type="checkbox"
-          checked={done}
+          checked={completed}
           style={{ transform: 'scale(1.5)' }}
-          onChange={toggleDone}
+          onChange={toggleCompleted}
         />
         <span style={{ flexGrow: 1, color: '#344054' }}>
           {props.description}

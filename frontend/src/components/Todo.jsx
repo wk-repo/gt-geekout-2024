@@ -8,7 +8,6 @@ import checkIcon from '../icons/check.svg'
 function Todo() {
   const [todoItems, setTodoItems] = useState({})
   const [newTodoDescription, setNewTodoDescription] = useState('')
-  const [done, setDone] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
   const today = new Date()
@@ -28,23 +27,21 @@ function Todo() {
   }
 
   const populateTodos = async () => {
-    const result = await axios.get(`${CONFIG.API_ENDPOINT}/todos`);
-    setTodoItems(result.data);
-  };
+    const result = await axios.get(`${CONFIG.API_ENDPOINT}/todos`)
+    console.log(result)
+    setTodoItems(result.data)
+  }
 
   const submitNewTodo = async () => {
     setIsLoading(true)
     if (newTodoDescription.trim() !== '') {
       const newTodo = {
         description: newTodoDescription,
-        done: done,
       }
       try {
-        console.log(`${CONFIG.API_ENDPOINT}/todos`)
         await axios.post(`${CONFIG.API_ENDPOINT}/todos`, newTodo)
         await populateTodos()
         setNewTodoDescription('')
-        setDone(false)
       } catch (error) {
         console.error('Error posting new todo:', error)
       }
@@ -67,9 +64,9 @@ function Todo() {
       <div className="input-container">
         <input
           type="checkbox"
-          checked={done}
+          checked={false}
+          disabled={true}
           style={{ transform: 'scale(1.5)' }}
-          onChange={() => setDone(!done)}
         />
         <input
           type="text"
@@ -100,7 +97,7 @@ function Todo() {
               key={todo.id}
               id={todo.id}
               description={todo.description}
-              done={todo.done}
+              completed={todo.completed}
               refreshToDos={populateTodos}
             />
           </div>

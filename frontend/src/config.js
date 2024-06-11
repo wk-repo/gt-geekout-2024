@@ -1,5 +1,5 @@
 const config = {
-  API_ENDPOINT: 'http://localhost:9000/api',
+  API_ENDPOINT: 'http://localhost:8000',
 }
 
 export default config

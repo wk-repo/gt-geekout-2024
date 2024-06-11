@@ -6,7 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import "@govtechsg/sgds/css/sgds.css";
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.getElementById("root")
 );
 root.render(
   <React.StrictMode>

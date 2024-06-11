@@ -1,39 +1,37 @@
+import { useState } from 'react'
 import axios from 'axios'
-import { useCallback, useState } from 'react'
 import CONFIG from '../config'
 import crossIcon from '../icons/cross.svg'
 
-export type TodoItemProps = {
-  id: string
-  description: string
-  done: boolean
-  refreshToDos: () => void
-}
-
-function TodoItem(props: TodoItemProps) {
+function TodoItem(props) {
   const [done, setDone] = useState(props.done)
 
-  const updateTodoItem = useCallback(
-    async (newDone: boolean) => {
+  const updateTodoItem = async (newDone) => {
+    try {
       await axios.put(`${CONFIG.API_ENDPOINT}/todos/${props.id}`, {
         id: props.id,
         description: props.description,
         done: newDone,
-      })
-    },
-    [props.description, props.id],
-  )
+      });
+    } catch (error) {
+      console.error('Error updating todo item:', error);
+    }
+  };
 
-  const deleteTodoItem = useCallback(async () => {
-    await axios.delete(`${CONFIG.API_ENDPOINT}/todos/${props.id}`)
-    props.refreshToDos() // Call refreshToDos after the todo item is successfully deleted
-  }, [props.id, props.refreshToDos])
+  const deleteTodoItem = async () => {
+    try {
+      await axios.delete(`${CONFIG.API_ENDPOINT}/todos/${props.id}`);
+      props.refreshToDos(); // Call refreshToDos after the todo item is successfully deleted
+    } catch (error) {
+      console.error('Error deleting todo item:', error);
+    }
+  };
 
-  const toggleDone = useCallback(() => {
-    const newDone = !done
-    setDone(newDone)
-    updateTodoItem(newDone) // Pass the new `done` state directly to the update function
-  }, [done, updateTodoItem])
+  const toggleDone = async () => {
+    const newDone = !done;
+    setDone(newDone);
+    await updateTodoItem(newDone); // Pass the new `done` state directly to the update function
+  };
 
   return (
     <>

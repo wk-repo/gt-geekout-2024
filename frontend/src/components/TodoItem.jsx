@@ -3,13 +3,7 @@ import axios from 'axios'
 import CONFIG from '../config'
 import crossIcon from '../icons/cross.svg'
 
-function TodoItem(props: {
-  key: string, 
-  id: string,
-  description: string,
-  completed: boolean,
-  refreshToDos: () => void,
-}) {
+function TodoItem(props) {
   const [completed, setCompleted] = useState(props.completed)
 
   const updateTodoItem = async (newCompleted) => {

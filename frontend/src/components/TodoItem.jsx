@@ -16,11 +16,6 @@ function TodoItem(props) {
     }
   }
 
-  //* Exercise 2B
-  const deleteTodoItem = async () => {
-    //* Fill in code
-  }
-
   return (
     <>
       <div className="todo-item">
@@ -33,8 +28,6 @@ function TodoItem(props) {
             backgroundColor: 'transparent',
             border: 'none',
           }}
-          //* Remember to use the onClick property to trigger the deletion
-          // onClick={...}
         >
           <img src={crossIcon} alt="Delete" className="delete-icon" />
         </button>

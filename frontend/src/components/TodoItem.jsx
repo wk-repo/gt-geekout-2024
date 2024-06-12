@@ -4,8 +4,10 @@ import CONFIG from '../config'
 import crossIcon from '../icons/cross.svg'
 
 function TodoItem(props) {
+  //* Exercise 3B
   const [completed, setCompleted] = useState(props.completed)
 
+  //* updateTodoItem function is used to update the state of completion of the TodoItem by making an api call via the PUT method
   const updateTodoItem = async (newCompleted) => {
     try {
       await axios.put(`${CONFIG.API_ENDPOINT}/todos/${props.id}`, {
@@ -27,10 +29,9 @@ function TodoItem(props) {
     }
   }
 
+  //* toggleCompleted function updates the TodoItem 'completed' state based on the whether he checkbox is checked or not
   const toggleCompleted = async () => {
-    const newCompleted = !completed
-    setCompleted(newCompleted)
-    await updateTodoItem(newCompleted) // Pass the new `completed` state directly to the update function
+    //* Insert code logic here
   }
 
   return (
@@ -38,9 +39,11 @@ function TodoItem(props) {
       <div className="todo-item">
         <input
           type="checkbox"
-          checked={completed}
           style={{ transform: 'scale(1.5)' }}
-          onChange={toggleCompleted}
+
+          //* Add the following 2 properties to manage the change in state of the checkbox based on user inputs
+          // checked={add function here}
+          // onChange={add function here}
         />
         <span style={{ flexGrow: 1, color: '#344054' }}>
           {props.description}

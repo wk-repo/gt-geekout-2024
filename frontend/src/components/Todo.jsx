@@ -10,8 +10,6 @@ function Todo() {
   const [todoItems, setTodoItems] = useState({})
   const [newTodoDescription, setNewTodoDescription] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  // Exercise 4B
-  // Remember to create a hook to track the state of the task description
 
   useEffect(() => {
     populateTodos()
@@ -41,9 +39,6 @@ function Todo() {
     }
     setIsLoading(false)
   }
-
-  // Exercise 4B
-  // useEffect(() => {}, [])
 
   return (
     <div className="todo-container">

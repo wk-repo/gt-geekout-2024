@@ -10,7 +10,8 @@ function Todo() {
   const [todoItems, setTodoItems] = useState({})
   const [newTodoDescription, setNewTodoDescription] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [isTooLong, setIsTooLong] = useState(false)
+  // Exercise 4B
+  // Remember to create a hook to track the state of the task description
 
   useEffect(() => {
     populateTodos()
@@ -41,13 +42,8 @@ function Todo() {
     setIsLoading(false)
   }
 
-  useEffect(() => {
-    if (newTodoDescription.length >= 30) {
-      setIsTooLong(true)
-    } else {
-      setIsTooLong(false)
-    }
-  }, [newTodoDescription])
+  // Exercise 4B
+  // useEffect(() => {}, [])
 
   return (
     <div className="todo-container">
@@ -72,7 +68,7 @@ function Todo() {
         />
         <Button
           onClick={submitNewTodo}
-          disabled={isLoading || isTooLong}
+          disabled={isLoading}
           className="save-button"
         >
           {isLoading ? (

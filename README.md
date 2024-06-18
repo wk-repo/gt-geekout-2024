@@ -20,12 +20,9 @@ Another way is to start a dev environment via Codespaces
 
 ## Running the application locally
 
-- Navigate to `backend` directory and perform the steps in the `README.md` within the directory
 - Navigate to `frontend` directory and perform the steps in the `README.md` within the directory
 
 ## Architecture
-
-This web application consists of two parts:
 
 ### Frontend
 
@@ -35,6 +32,4 @@ The Todo application contains a simple user interface for users to create, view,
 
 ### Backend
 
-Express was used as the backend framework.
-
-It exposes API endpoints which implement the Create, Read, Update, Delete, and List actions of Todo items.
+The backend API for our app is hosted in another repo.

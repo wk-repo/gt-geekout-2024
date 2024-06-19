@@ -1,5 +1,5 @@
 const config = {
-  API_ENDPOINT: 'https://todo-list-api-dmqq4kn66q-as.a.run.app',
+  API_ENDPOINT: 'http://localhost:8000',
 }
 
 export default config
